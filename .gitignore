@@ -1,0 +1,10 @@
+.gitignore
+.gitignore~
+*.pl~
+*.md~
+items-xml-get/*
+items-xml/*
+items-xml-modified/*
+*.log
+*.txt
+*.bak

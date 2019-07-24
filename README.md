@@ -14,12 +14,14 @@ Lancement du script : `perl get_item_data.pl`
 
 Entrée : fichier `barcode-items.txt`
 
-Sortie : fichier `items.tmp` 
+Sortie : fichiers dans le répertoire `items-xml-get` 
 
-Description : pour chaque ligne dans `barcode-items.txt`, le script écrit un ordre curl faitsant un appel à l'API Alma retrouvant un exemplaire sur la base du code-barre (voir ci-dessous). Cet ordre est écrit dans le fichier `items.tmp`. A la fin du script, on a autant d'ordre curl dans le fichier que de codes-barres dans le fichier `barcode-items.txt`.
+Description : pour chaque ligne dans `barcode-items.txt`, le script écrit un ordre curl faitsant un appel à l'API Alma retrouvant un exemplaire sur la base du code-barre (voir ci-dessous). 
+Cet ordre est écrit dans le fichier `wget-items-BARCODE.tmp` où BARCODE est le code-barre en cours de traitement. A la fin du script, on a autant de fichier .tmp dans le répertoire de sortie que de codes-barres dans le fichier `barcode-items.txt`, les codes-barres non recevables exclus.
+Le programme ignore en effet les codes-barres qui commencent par EB, AD, UL, TL, RE ou Re.
 
 #### 2. Exécuter `items.tmp`
-Les ordres contenues dans `items.tmp` doivent être exécutés. Il faut donc rendre ce fichier exécutable et le lancer.
+Les ordres contenues dans les fichiers stockés dans `items-xml-get` doivent être exécutés. Il faut donc rendre ces fichiers exécutables et les lancer.
 L'API Alma appelé est `https://api-eu.hosted.exlibrisgroup.com/almaws/v1/items?view=label&item_barcode=CODEBARRE` qui renvoie un flux XML pour l'exemplaire dont le code-barre est CODEBARRE (paramètre). Le résultat est stocké dans un fichier `items-xml/CODEBARRE.xml`
 
 #### 3. Script `modify_item_data.pl`

@@ -25,7 +25,7 @@ my $adresse_api = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/mms_id
 # Création d'un dictionnaire faisant correspondre les codes-barres et les descriptions
 # ####################################################################################
 my %cb2description;
-open ( FILE_IN, "<", "./items.txt") || die "Le fichier items.txt est manquant\n";
+open ( FILE_IN, "<", "./barcode-items.txt") || die "Le fichier barcode-items.txt est manquant\n";
 while (<FILE_IN>)
 { 
 	chomp;
