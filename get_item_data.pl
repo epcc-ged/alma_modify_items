@@ -50,7 +50,7 @@ my $item_xml = '';
 		if (begins_with($code_barre) == 1){
       open ( FILE_OUT, ">", "./items-xml-get/wget-items-" . $code_barre . ".tmp") || die "Impossible d'ouvrir le fichier de sortie temporaire\n";
       binmode FILE_OUT, ":utf8";
-			print FILE_OUT "wget -O - -o /dev/null 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/items?view=label&item_barcode=" . $code_barre . "&apikey=" . $APIKEY  . "' > ../items-xml/" . $code_barre . ".xml" . "\n";
+			print FILE_OUT "wget -O - -o /dev/null 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/items?view=label&item_barcode=" . $code_barre . "&apikey=" . $APIKEY  . "' > ../items-xml/" . $code_barre . ".tmp" . "\n";
 			TRACE "Code barre $code_barre traité dans le fichier wget-items-$code_barre.tmp\n";
       close(FILE_OUT);
 		}

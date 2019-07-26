@@ -81,7 +81,7 @@ my $item_pid;
 			$temp_adresse_api =~ s/item_pid/$item_pid/g;       # Mettre l'identifiant item dans l'appel API
 
 			my $ordre_api = 'curl -X PUT "'. $temp_adresse_api . '?apikey=' . $APIKEY . '" -H  "accept: application/xml" -H  "Content-Type: application/xml" -d "';
-			$ordre_api = $ordre_api . $sortie . "\"";
+			$ordre_api = $ordre_api . $sortie . "\" > log/modified" . $FILE_NAME . ".log";
 			TRACE "--> Ordre API à envoyer à Alma : $ordre_api\n";
 
 			# Enregistrement de l'ordre dans un fichier.
