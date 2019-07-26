@@ -85,6 +85,7 @@ case $MODE in
 		echo "--> Valeurs possibles :"
 		echo "----> GET : pour exécuter les fichiers qui sont dans items-xml-get"
 		echo "----> MODIFY : pour exécuter les fichiers qui sont dans items-xml-modified"
+		echo "----> INIT : initalisation des répertoires de travail"
 		echo "Fin de programme"
 		;;
 esac
