@@ -5,7 +5,10 @@ case $MODE in
 		# Nettoyage ou création des répertoires nécessaires
 		if [ -d "./items-xml" ]; then
 			echo "Nettoyage de ./items-xml"
-			rm ./items-xml/*.tmp
+			for file in ./items-xml/*.tmp
+			do
+			  rm $file
+			done
 		else
 			echo "Création de ./items-xml"
 			mkdir ./items-xml
@@ -13,7 +16,10 @@ case $MODE in
 
 		if [ -d "./items-xml-get" ]; then
 			echo "Nettoyage de ./items-xml-get"
-			rm ./items-xml-get/*.tmp
+			for file in ./items-xml-get/*.tmp
+			do
+			  rm $file
+			done
 		else
 			echo "Création de ./items-xml-get"
 			mkdir ./items-xml-get
@@ -21,11 +27,17 @@ case $MODE in
 
 		if [ -d "./items-xml-modified" ]; then
 			echo "Nettoyage de ./items-xml-modified"
-			rm ./items-xml-modified/*.tmp
+			for file in ./items-xml-modified/*.tmp
+			do
+			  rm $file
+			done
 
 			if [ -d "./items-xml-modified/log" ]; then
 				echo "Nettoyage de ./items-xml-modified/log"
-				rm ./items-xml-modified/log/*.log
+			  for file in ./items-xml-modified/log/*.tmp
+			  do
+			    rm $file
+			  done
 			else
 				echo "Création de ./items-xml-modified/log"
         mkdir ./items-xml-modified/log
