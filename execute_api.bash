@@ -53,6 +53,7 @@ case $MODE in
 		cd ./items-xml-get
 		for file in *.tmp
 		do
+			chmod u+x $file
 			msg=`./$file 2>&1`
 			if [ $? -eq 0 ]
 			then
@@ -61,6 +62,8 @@ case $MODE in
 			  echo -e "--> Erreur sur '$file'\n----> Code retour $?\n----> Message : $msg"
 			fi
 		done
+    # J'efface tous les fichiers restés vides qui corresponent aux cas d'erreur
+		find . -size 0c -delete 
 		echo "Tous les fichiers ont été traités. Vérifiez les messages d'erreurs pour savoir si l'un d'entre eux a posé problème."
 		;;
 	MODIFY)
