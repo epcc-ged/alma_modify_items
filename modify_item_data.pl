@@ -21,7 +21,6 @@ use XML::Twig;
 # Clef API en écriture sur le bac à sable
 my $APIKEY = 'l8xx6d859dd63ee94cf9981a4911c99f8aa1';
 my $adresse_api = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/mms_id/holdings/holding_id/items/item_pid';
-
 # Création d'un dictionnaire faisant correspondre les codes-barres et les descriptions
 # ####################################################################################
 my %cb2description;
@@ -33,6 +32,7 @@ while (<FILE_IN>)
 	# Si jamais un code barre apparaît deux fois, on n'a pas le choix : il faut
 	# écraser avec la dernière valeur trouvée.
 	# #########################################################################
+	TRACE $key;
 	$cb2description{$key} = $val; 
 }
 close(FILE_IN);

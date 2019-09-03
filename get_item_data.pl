@@ -46,6 +46,7 @@ my $item_xml = '';
 		my $ligne = $_ ;
 		chomp($ligne);
 		my ($code_barre,$description) = split(/\|/, $ligne);
+
 		# Ecrire un appel API pour récupérer les informations sur l'item. On ignore certains codes-barres néanmoins.
 		if (begins_with($code_barre) == 1){
       open ( FILE_OUT, ">", "./items-xml-get/wget-items-" . $code_barre . ".tmp") || die "Impossible d'ouvrir le fichier de sortie temporaire\n";
