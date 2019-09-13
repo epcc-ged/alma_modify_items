@@ -24,7 +24,15 @@ my $adresse_api = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/mms_id
 # Création d'un dictionnaire faisant correspondre les codes-barres et les descriptions
 # ####################################################################################
 my %cb2description;
-open ( FILE_IN, "<", "./barcode-items.txt") || die "Le fichier barcode-items.txt est manquant\n";
+my ($entry_file) = @ARGV;
+if (not defined $entry_file) {
+    die "Indiquez un fichier contenant les codes barres et la description en entrée";
+}
+else {
+    TRACE "Fichier traité : $entry_file\n";
+}
+open ( FILE_IN, "<", $entry_file) || die "Le fichier $entry_file est manquant\n";
+binmode FILE_IN, ":utf8";
 while (<FILE_IN>)
 { 
 	chomp;
@@ -50,13 +58,14 @@ my $item_pid;
 	my @files = readdir $rep;
   foreach my $FILE_NAME (@files) 
 	{
-		if (($FILE_NAME ne '..') and ($FILE_NAME ne '.'))
+		if (($FILE_NAME ne '..') and ($FILE_NAME ne '.') and ($FILE_NAME ne 'traites') and ($FILE_NAME ne 'log'))
 		{
 		  my $fichier_xml = $repertoire . $FILE_NAME;
 		  TRACE "Fichier traité : $fichier_xml\n";
 	    # Lecture des informations récupérées d'Alma. C'est un arbre XML.
 	    # ###############################################################
 	    my $twig= new XML::Twig( 
+				    output_encoding => 'UTF-8',
 		        twig_handlers =>                     # Handler sur le tag 
 		          { item_data => \&item_data,        # Sur l'item
 								holding_data => \&holding_data,  # sur la holding
@@ -67,9 +76,9 @@ my $item_pid;
 
 			# Construction de l'ordre API à envoyer à Alma.
 			# #############################################
-			TRACE "--> MMS ID : $mms_id\n";
-			TRACE "--> HOLDING ID : $holding_id\n";
-			TRACE "--> PID : $item_pid\n";
+			#TRACE "--> MMS ID : $mms_id\n";
+			#TRACE "--> HOLDING ID : $holding_id\n";
+			#TRACE "--> PID : $item_pid\n";
 
 			# $twig->print(pretty_print=>'indented');
       my $sortie = $twig->sprint;               # C'est le XML a envoyer dans Alma après les modifications
@@ -82,7 +91,7 @@ my $item_pid;
 
 			my $ordre_api = 'curl -X PUT "'. $temp_adresse_api . '?apikey=' . $APIKEY . '" -H  "accept: application/xml" -H  "Content-Type: application/xml" -d "';
 			$ordre_api = $ordre_api . $sortie . "\" > log/modified" . $FILE_NAME . ".log";
-			TRACE "--> Ordre API à envoyer à Alma : $ordre_api\n";
+			#TRACE "--> Ordre API à envoyer à Alma : $ordre_api\n";
 
 			# Enregistrement de l'ordre dans un fichier.
 			# ##########################################
@@ -90,8 +99,8 @@ my $item_pid;
 			binmode $file_out, ":utf8";
 			print $file_out $ordre_api;
 	    close($file_out);
-			TRACE "--> Ordre API enregistré dans le fichier.\n";
-			TRACE "Fin de traitement du fichier --------------------\n";
+			#TRACE "--> Ordre API enregistré dans le fichier.\n";
+			#TRACE "Fin de traitement du fichier --------------------\n";
     }
   }
 }

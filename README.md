@@ -9,10 +9,13 @@ Le processus s'effectue en plusieurs étapes et nécessite de disposer d'un fich
 
 Ce fichier disponible, il faut le placer dans le même répertoire que les scripts Perl. Dans ce répertoire, il faut créer deux sous-répertoires : **`items-xml`** et **`items-xml-modified`**. Ce dernier répertoire doit également contenir un sous-répertoire `log`.
 
+### 0. Initialisation
+Lancement du script : `execute_api.bash INIT` qui vide les répertoires nécessaires.
+
 #### 1. Script get_item_data.pl
 Lancement du script : `perl get_item_data.pl`
 
-Entrée : fichier `barcode-items.txt`
+Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions
 
 Sortie : fichiers dans le répertoire `items-xml-get` 
 
@@ -24,10 +27,12 @@ Le programme ignore en effet les codes-barres qui commencent par EB, AD, UL, TL,
 Les ordres contenues dans les fichiers stockés dans `items-xml-get` doivent être exécutés. Il faut donc rendre ces fichiers exécutables et les lancer.
 L'API Alma appelé est `https://api-eu.hosted.exlibrisgroup.com/almaws/v1/items?view=label&item_barcode=CODEBARRE` qui renvoie un flux XML pour l'exemplaire dont le code-barre est CODEBARRE (paramètre). Le résultat est stocké dans un fichier `items-xml/CODEBARRE.tmp`
 
+On automatise ces lancements en exécutant `execute_api.bash GET`
+
 #### 3. Script `modify_item_data.pl`
 Lancement du script : `perl modify_item_data.pl`
 
-Entrée : contenu du répertoire `items-xml` et fichier `barcode-items.txt`
+Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions
 
 Sortie : fichiers dans le répertoire `items-xml-modified`
 
@@ -35,6 +40,8 @@ Description : ce script prend chaque fichier tmp trouvé dans `items-xml`, y mod
 
 #### 4. Exécuter les fichiers contenus dans `items-xml-modified`
 Ces fichiers mettent à jour les exemplaires dans Alma. 
+
+On automatise ces lancements en exécutant `execute_api.bash MODIFY`
 
 ### Script execute_api.bash
 Ce script bash permet d'initialiser les répertoires de travail et de lancer les fichiers tmp se trouvant dans les répertoires de travail.
@@ -48,6 +55,3 @@ Le paramètre MODE doit valoir :
 ### Remarque
 Les deux scripts Perl produisent des fichiers .log donnant le détail des opérations réalisées.
 
-
-### A faire
-- Passage en paramètre du nom du fichier de codes-barres plutôt que d'imposer le nom.

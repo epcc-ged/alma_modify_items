@@ -33,7 +33,16 @@ sub begins_with
 
 # Main
 {
-open ( FILE_IN, "<", "./barcode-items.txt") || die "Le fichier barcode-items.txt est manquant\n";
+
+my ($entry_file) = @ARGV;
+if (not defined $entry_file) {
+    die "Indiquez un fichier contenant les codes barres et la description en entrée";
+}
+else {
+			TRACE "Fichier traité : $entry_file\n";
+}
+
+open ( FILE_IN, "<", $entry_file) || die "Le fichier $entry_file est manquant\n";
 binmode FILE_IN, ":utf8";
 my $bib_id = '';
 my $holding_id = '';

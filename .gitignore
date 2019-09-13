@@ -2,6 +2,7 @@
 .gitignore~
 *.pl~
 *.md~
+*.bash~
 items-xml-get/*
 items-xml/*
 items-xml-modified/*
