@@ -19,14 +19,14 @@ Log::Log4perl->easy_init({
 use XML::Twig;
 
 # Clef API en écriture sur le bac à sable
-my $APIKEY = 'l8xx6d859dd63ee94cf9981a4911c99f8aa1';
+#my $APIKEY = 'l8xx6d859dd63ee94cf9981a4911c99f8aa1';
 my $adresse_api = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/mms_id/holdings/holding_id/items/item_pid';
 # Création d'un dictionnaire faisant correspondre les codes-barres et les descriptions
 # ####################################################################################
 my %cb2description;
-my ($entry_file) = @ARGV;
-if (not defined $entry_file) {
-    die "Indiquez un fichier contenant les codes barres et la description en entrée";
+my ($entry_file, $APIKEY) = @ARGV;
+if (not defined $entry_file or not defined $APIKEY) {
+	  die "Indiquez en entrée (1)un fichier contenant les codes barres et la description et (2) la clef API";
 }
 else {
     TRACE "Fichier traité : $entry_file\n";

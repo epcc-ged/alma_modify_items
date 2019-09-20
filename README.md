@@ -15,7 +15,7 @@ Lancement du script : `execute_api.bash INIT` qui vide les répertoires nécessa
 #### 1. Script get_item_data.pl
 Lancement du script : `perl get_item_data.pl`
 
-Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions
+Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions. Il faut aussi donner la clef API à utiliser.
 
 Sortie : fichiers dans le répertoire `items-xml-get` 
 
@@ -32,7 +32,7 @@ On automatise ces lancements en exécutant `execute_api.bash GET`
 #### 3. Script `modify_item_data.pl`
 Lancement du script : `perl modify_item_data.pl`
 
-Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions
+Entrée : à la ligne de commande, il faut indiquer le fichier CSV avec les codes-barres et les descriptions. Il faut aussi donner la clef API à utiliser.
 
 Sortie : fichiers dans le répertoire `items-xml-modified`
 

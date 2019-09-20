@@ -14,6 +14,17 @@ case $MODE in
 			mkdir ./items-xml
 		fi
 
+		if [ -d "./items-xml/traites" ]; then
+	    echo "Nettoyage de ./items-xml/traites"
+			for file in ./items-xml/traites/*.tmp
+			do
+			  rm $file
+			done
+		else
+			echo "Création de ./items-xml/traites"
+			mkdir ./items-xml/traites
+	  fi
+
 		if [ -d "./items-xml-get" ]; then
 			echo "Nettoyage de ./items-xml-get"
 			for file in ./items-xml-get/*.tmp
@@ -25,29 +36,50 @@ case $MODE in
 			mkdir ./items-xml-get
 		fi
 
+		if [ -d "./items-xml-get/traites" ]; then
+		  echo "Nettoyage de ./items-xml-get/traites"
+			for file in ./items-xml-get/traites/*.tmp
+			  do
+				  rm $file
+				done
+		else
+			echo "Création de ./items-xml-get/traites"
+			mkdir ./items-xml-get/traites
+		fi
+
 		if [ -d "./items-xml-modified" ]; then
 			echo "Nettoyage de ./items-xml-modified"
 			for file in ./items-xml-modified/*.tmp
 			do
 			  rm $file
 			done
-
-			if [ -d "./items-xml-modified/log" ]; then
-				echo "Nettoyage de ./items-xml-modified/log"
-			  for file in ./items-xml-modified/log/*.tmp
-			  do
-			    rm $file
-			  done
-			else
-				echo "Création de ./items-xml-modified/log"
-        mkdir ./items-xml-modified/log
-			fi
-
 		else
-			echo "Création de ./items-xml-modified et de ./items-xml-modified/log"
+			echo "Création de ./items-xml-modified"
 			mkdir items-xml-modified
+		fi
+
+		if [ -d "./items-xml-modified/log" ]; then
+			echo "Nettoyage de ./items-xml-modified/log"
+			for file in ./items-xml-modified/log/*.tmp.log
+			do
+			  rm $file
+			done
+		else
+			echo "Création de ./items-xml-modified/log"
       mkdir ./items-xml-modified/log
 		fi
+
+		if [ -d "./items-xml-modified/traites" ]; then
+		 	echo "Nettoyage de ./items-xml-modified/traites"
+			for file in ./items-xml-modified/traites/*.tmp
+			do
+				rm $file
+			done
+		else
+			echo "Création de ./items-xml-modified/traites"
+			mkdir ./items-xml-modified/traites
+		fi
+
 		echo "L'environnement est initialisé"
 		echo "Procédure :"
 		echo "1. Lancez perl get_item_data.pl"
@@ -70,8 +102,9 @@ case $MODE in
 			if [ $? -eq 0 ]
 			then
 				echo "--> Succès sur '$file' bien exécuté (code retour $?)"
+				mv ./$file traites
 			else
-			  echo -e "--> Erreur sur '$file'\n----> Code retour $?\n----> Message : $msg"
+			  echo -e "--> Erreur sur '$file' ----> Code retour $? ----> Message : $msg"
 			fi
 		done
 		# J'efface tous les fichiers résultats restés vides qui corresponent aux cas d'erreur
@@ -93,7 +126,7 @@ case $MODE in
 				echo "--> Succès sur '$file' bien exécuté (code retour $?)"
 				mv ./$file traites
 			else
-			  echo -e "--> Erreur sur '$file'\n----> Code retour $?\n----> Message : $msg"
+			  echo -e "--> Erreur sur '$file' ----> Code retour $? ----> Message : $msg"
 			fi
 		done
 		echo "Tous les fichiers ont été traités. Vérifiez les messages d'erreurs pour savoir si l'un d'entre eux a posé problème."

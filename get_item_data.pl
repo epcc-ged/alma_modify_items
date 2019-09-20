@@ -5,6 +5,7 @@
 # d'exemplaires ainsi qu'un champ qu'on nommera description associé au code-
 # -barre. Pour chaque code-barre lu, le script écrit un ordre d'appel à une API
 # d'Alma qui renverra un arbre XML contenant le détail de l'item.
+# ENTREE : nom du fichier CSV code-barre/description ; clef API
 # SORTIE : un fichier par item dans un répertoire wget-xml-get
 ################################################################################
 use strict;
@@ -16,9 +17,6 @@ Log::Log4perl->easy_init({
 	level => $TRACE, 
 	file => ":utf8> get_item_data.log" 
 });
-
-# Clef API en écriture sur le bac à sable
-my $APIKEY = 'l8xx6d859dd63ee94cf9981a4911c99f8aa1';
 
 # Sous-routine pour vérifier le début des codes-barres
 ######################################################
@@ -34,12 +32,9 @@ sub begins_with
 # Main
 {
 
-my ($entry_file) = @ARGV;
-if (not defined $entry_file) {
-    die "Indiquez un fichier contenant les codes barres et la description en entrée";
-}
-else {
-			TRACE "Fichier traité : $entry_file\n";
+my ($entry_file, $APIKEY) = @ARGV;
+if (not defined $entry_file or not defined $APIKEY) {
+    die "Indiquez en entrée (1)un fichier contenant les codes barres et la description et (2) la clef API";
 }
 
 open ( FILE_IN, "<", $entry_file) || die "Le fichier $entry_file est manquant\n";
